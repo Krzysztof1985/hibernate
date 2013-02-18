@@ -9,18 +9,17 @@ import pl.selfimproveit.model.User;
 public class Launcher {
 
 	public static void main(String[] args) {
-
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
 		
-		User user1 = new User();
-		user1.setFirstName("Andy");
-		
-		user1.setLastName("Kowalsky");
-		
 		session.beginTransaction();
-		session.save(user1);
+		for (int i = 0; i < 100; i++) {
+			User user = new User();
+
+			user.setFirstName("Andy" + i);
+			user.setLastName("Kowalsky" + i);
+			session.save(user);
+		}
 		session.getTransaction().commit();
-		session.close();
 	}
 }
